@@ -78,16 +78,21 @@ namespace ariel {
                 player1.updateWininngs(numOfCards);
                 this->log[(unsigned int)this->turn] = endResult;
                 this->turn++;
+                this->player2.addLoss();
+                this->player1.addWin();
                 return;
 
             } else if (card1.getCard() < card2.getCard() || (card2.getCard() == 2 && card1.getCard() == 14)) {
                 endResult = result + " " + this->player2.getName() + " wins.";
                 player1.updateWininngs(numOfCards);
                 this->log[(unsigned int)this->turn] = endResult;
+                this->player1.addLoss();
+                this->player2.addWin();
                 this->turn++;
                 return;
 
             } else if (card1.getCard() == card2.getCard()) {
+                this->draws++;
                 //if player card index<1 then problem
                 //if only one card left then compare them
                 if (player1.stacksize() == 1) {
@@ -137,11 +142,26 @@ namespace ariel {
     }
 
     void Game::printStats() {
+        cout<<player1.getName()<<endl;
+        cout<<" win loss rate "<<player1.getWins()<<
+        "/"<<player1.getLosses()<<endl;
 
     }
 
     void Game::printWiner() {
-        if()
+        if(this->player1.stacksize()>0){
+            throw("the game isn't over");
+        }
+        if(this->player1.stacksize()>this->player2.stacksize()){
+            cout<<player1.getName()<<endl;
+        }else if(this->player1.stacksize()<this->player2.stacksize()){
+            cout<<player2.getName()<<endl;
+        }else{
+            cout<<"no winner"<<endl;
+        }
+    }
+    int Game::getDraws() const {
+        return this->draws;
     }
 
 }

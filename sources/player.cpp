@@ -48,4 +48,6 @@ namespace ariel {
             }
 
     }
+    int Player::getWins() const {return this->wins;}
+    int Player::getLosses() const {return this->losses;}
 }

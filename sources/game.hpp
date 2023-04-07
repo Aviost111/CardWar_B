@@ -13,6 +13,7 @@ namespace ariel {
         Player& player2;
         array<string ,MaxTurns> log;
         int turn;
+        int draws;
 
 
     public:
@@ -29,6 +30,7 @@ namespace ariel {
         void printStats();
 
         void printLastTurn() const;
+        int getDraws() const;
     };
 }
 

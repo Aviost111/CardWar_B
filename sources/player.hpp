@@ -6,7 +6,6 @@
 #include <array>
 
 const int numOfCards = 26;
-//const int lastIndex = 25;
 
 using namespace std;
 namespace ariel {
@@ -14,6 +13,8 @@ namespace ariel {
         array<Card, numOfCards> cards;
         int CardIndex = -1;
         int winnings = 0;
+        int wins=0;
+        int losses=0;
         string name;
 
     public:
@@ -38,6 +39,11 @@ namespace ariel {
         void setArr(array<Card,numOfCards>arr);
 
         int getWinnings() const;
+
+        int getWins() const;
+        int getLosses() const;
+        void addWin(){this.wins++;}
+        void addLoss(){this.lossses++;}
     };
 }
 
