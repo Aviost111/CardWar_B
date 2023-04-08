@@ -42,8 +42,8 @@ namespace ariel {
 
         int getWins() const;
         int getLosses() const;
-        void addWin(){this.wins++;}
-        void addLoss(){this.lossses++;}
+        void addWin();
+        void addLoss();
     };
 }
 

@@ -142,21 +142,23 @@ namespace ariel {
 
     void Game::printStats() {
         cout<<player1.getName()<<":"<<endl;
-        cout<<" win loss rate-"<<player1.getWins()<<
-        "/"<<player1.getLosses()<<endl;
-        cout<<" cards won-"<<player1.getWinnings()<<endl;
+        cout<<" win rate-"<<(player1.getWins()/(player1.getWins()+player1.getLosses()))<<endl;
+        cout<<" cards won-"<<player1.getWinnings()<<endl<<endl;
         cout<<player2.getName()<<":"<<endl;
-        cout<<" win loss rate-"<<player2.getWins()<<
-            "/"<<player2.getLosses()<<endl;
-        cout<<" cards won-"<<player2.getWinnings()<<endl;
+        cout<<" win rate-"<<(player2.getWins()/(player2.getWins()+player2.getLosses()))<<endl;
+        cout<<" cards won-"<<player2.getWinnings()<<endl<<endl;
+        if(this->turn>0) {
+            cout << "draw rate-" << this->draws / (this->turn) << endl;
+        }else{
+            cout << "draw rate-" << 0 << endl;
+        }
         cout<<"There were a total of "<<this->draws<<" draws"<<endl;
     }
 
     void Game::printWiner() {
         if(this->player1.stacksize()>0){
-            throw("the game isn't over");
-        }
-        if(this->player1.stacksize()>this->player2.stacksize()){
+            cout<<"the game isn't over"<<endl;
+        }else if(this->player1.stacksize()>this->player2.stacksize()){
             cout<<player1.getName()<<endl;
         }else if(this->player1.stacksize()<this->player2.stacksize()){
             cout<<player2.getName()<<endl;
