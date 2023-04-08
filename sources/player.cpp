@@ -1,6 +1,7 @@
 #include "player.hpp"
 #include <stdexcept>
 #include <cstring>
+
 #define NUM_OF_CARDS 26
 
 using namespace ariel;
@@ -8,11 +9,11 @@ using namespace std;
 
 namespace ariel {
     Player::Player() {
-        this->name="avi";
+        this->name = "avi";
     }
 
     Player::Player(string name) {
-        if(name.empty()){
+        if (name.empty()) {
             throw invalid_argument("you did not enter a name");
         }
         this->name = name;
@@ -35,21 +36,26 @@ namespace ariel {
     }
 
     void Player::updateWininngs(int num) {
-        this->winnings+=num;
+        this->winnings += num;
     }
+
     int Player::getWinnings() const {
         return this->winnings;
     }
 
-    void Player::setArr(array<Card,26>arr) {
-            for (int i = 0; i < 26 ;i++) {
-                this->cards[(unsigned int)i]=arr[(unsigned int)i];
-                this->CardIndex++;
-            }
+    void Player::setArr(array<Card, 26> arr) {
+        for (int i = 0; i < 26; i++) {
+            this->cards[(unsigned int) i] = arr[(unsigned int) i];
+            this->CardIndex++;
+        }
 
     }
-    int Player::getWins() const {return this->wins;}
-    int Player::getLosses() const {return this->losses;}
-    void Player::addWin() {this->wins++;}
-    void Player::addLoss() {this->losses++;}
+
+    int Player::getWins() const { return this->wins; }
+
+    int Player::getLosses() const { return this->losses; }
+
+    void Player::addWin() { this->wins++; }
+
+    void Player::addLoss() { this->losses++; }
 }
