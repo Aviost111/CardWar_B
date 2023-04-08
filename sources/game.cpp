@@ -127,7 +127,6 @@ namespace ariel {
 
     void Game::printLastTurn() const {
         if (this->turn == 0) {
-            //TODO not of type invalid argument
             throw("There is no previous turn");
         }
         cout << this->log[(unsigned int)this->turn - 1] << endl;
@@ -142,10 +141,15 @@ namespace ariel {
     }
 
     void Game::printStats() {
-        cout<<player1.getName()<<endl;
-        cout<<" win loss rate "<<player1.getWins()<<
+        cout<<player1.getName()<<":"<<endl;
+        cout<<" win loss rate-"<<player1.getWins()<<
         "/"<<player1.getLosses()<<endl;
-
+        cout<<" cards won-"<<player1.getWinnings()<<endl;
+        cout<<player2.getName()<<":"<<endl;
+        cout<<" win loss rate-"<<player2.getWins()<<
+            "/"<<player2.getLosses()<<endl;
+        cout<<" cards won-"<<player2.getWinnings()<<endl;
+        cout<<"There were a total of "<<this->draws<<" draws"<<endl;
     }
 
     void Game::printWiner() {
