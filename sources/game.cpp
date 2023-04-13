@@ -96,12 +96,12 @@ namespace ariel {
                 //if player card index<1 then problem
                 //if only one card left then compare them
                 if (player1.stacksize() == 1) {
-                    card1 = player1.getArr()[(unsigned int) player1.stacksize() - 1];
-                    card2 = player2.getArr()[(unsigned int) player2.stacksize() - 1];
                     player1.usedCard();
                     player2.usedCard();
                     numOfCards += 2;
-                    continue;
+                    player1.updateWininngs(numOfCards / 2);
+                    player2.updateWininngs(numOfCards / 2);
+                    break;
                 } else if (player1.stacksize() == 0) {
                     result += " draw.";
                     log[(unsigned int) this->turn] = result;
