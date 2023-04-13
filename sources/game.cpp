@@ -118,8 +118,6 @@ namespace ariel {
                 player2.usedCard();
                 numOfCards += 4;
                 result += " draw.";
-            } else {
-                cout << "Should not be here" << endl;
             }
         }
 
