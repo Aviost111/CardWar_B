@@ -32,9 +32,7 @@ namespace ariel {
 
         string getName() const;
 
-        void usedCard() {
-            this->CardIndex--;
-        }
+        void usedCard();
 
         void setArr(array <Card, numOfCards> arr);
 

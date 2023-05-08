@@ -5,7 +5,7 @@ using namespace ariel;
 using namespace std;
 
 namespace ariel {
-    Card::Card(int num, const string &type) {
+    Card::Card(int num, const string &type):number(num),type(type) {
         if (num > 13 || num < 1) {
             throw invalid_argument("cards can only be between 1-13");
         }
