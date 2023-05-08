@@ -16,23 +16,29 @@ namespace ariel {
     //why const ?is it even ok?
     Game::Game(ariel::Player &player1, ariel::Player &player2) :
             player1(player1), player2(player2) {
-        int deck[DECK_SIZE];
+        //create an array of indexes
+        int indexes[DECK_SIZE];
+        //we want to shuffle a deck later, so we create the deck before shuffle and the deck for after
         array<Card, DECK_SIZE> deckSrc;
         array<Card, DECK_SIZE> deckDst;
+        //fill first deck
         for (int i = 0; i < 13; i++) {
             deckSrc[(unsigned int) (i * 4)] = Card(i + 1, "Hearts");
             deckSrc[(unsigned int) (i * 4) + 1] = Card(i + 1, "Spades");
             deckSrc[(unsigned int) (i * 4) + 2] = Card(i + 1, "Diamonds");
             deckSrc[(unsigned int) (i * 4) + 3] = Card(i + 1, "Clubs");
         }
-
+        //fill array of indexes
         for (int i = 0; i < DECK_SIZE; i++) {
-            deck[(unsigned int) i] = i;
+            indexes[(unsigned int) i] = i;
         }
-        shuffle(deck, deck + 52, std::mt19937(std::random_device()()));
+        //shuffle indexes
+        shuffle(indexes, indexes + 52, std::mt19937(std::random_device()()));
+        //use the shuffled indexes to create the shuffled deck
         for (int i = 0; i < DECK_SIZE; i++) {
-            deckDst[(unsigned int) i] = deckSrc[(unsigned int) deck[(unsigned int) i]];
+            deckDst[(unsigned int) i] = deckSrc[(unsigned int) indexes[(unsigned int) i]];
         }
+        //split the decks
         array<Card, DECK_SIZE / 2> p1Deck;
         array<Card, DECK_SIZE / 2> p2Deck;
         for (int i = 0; i < 26; ++i) {
@@ -65,17 +71,19 @@ namespace ariel {
         if (&player1 == &player2) {
             throw ("same player");
         }
+        //draw cards
         Card card1 = player1.getArr()[(unsigned int) player1.stacksize() - 1];
         Card card2 = player2.getArr()[(unsigned int) player2.stacksize() - 1];
         player1.usedCard();
         player2.usedCard();
         int numOfCards = 2;
         string result;
-        //what if end of game in the middle of a war.
         while (true) {
+            //add the draws to our result
             result += " " + this->player1.getName() + " played " + card1.cardName() + " of " + card1.getType() +
                       " " + player2.getName() + " played " + card2.cardName() + " of " + card2.getType() + ".";
             string endResult;
+            //if p1 wins add that to result and update stats and finish turn
             if (card1.getCard() > card2.getCard() || (card1.getCard() == 2 && card2.getCard() == 14)) {
                 endResult = result + " " + this->player1.getName() + " wins.";
                 player1.updateWininngs(numOfCards);
@@ -84,7 +92,7 @@ namespace ariel {
                 this->player2.addLoss();
                 this->player1.addWin();
                 return;
-
+                //if p2 wins add that to result and update stats and finish turn
             } else if (card1.getCard() < card2.getCard() || (card2.getCard() == 2 && card1.getCard() == 14)) {
                 endResult = result + " " + this->player2.getName() + " wins.";
                 player2.updateWininngs(numOfCards);
@@ -93,26 +101,23 @@ namespace ariel {
                 this->player2.addWin();
                 this->turn++;
                 return;
-
+            //else it's a draw
             } else if (card1.getCard() == card2.getCard()) {
                 this->draws++;
-                //if player card index<1 then problem
-                //if only one card left then compare them
-                if (player1.stacksize() == 1) {
-                    player1.usedCard();
-                    player2.usedCard();
-                    numOfCards += 2;
-                    player1.updateWininngs(numOfCards / 2);
-                    player2.updateWininngs(numOfCards / 2);
-                    break;
-                } else if (player1.stacksize() == 0) {
+                //if the players have 1 or fewer cards left, just split it
+                if ((player1.stacksize() == 1)||(player1.stacksize() == 0)) {
+                    if (player1.stacksize() == 1) {
+                        player1.usedCard();
+                        player2.usedCard();
+                        numOfCards += 2;
+                    }
                     result += " draw.";
                     log[(unsigned int) this->turn] = result;
                     player1.updateWininngs(numOfCards / 2);
                     player2.updateWininngs(numOfCards / 2);
-                    turn++;
                     break;
                 }
+                //use a card face down and a card face up and restart the loop
                 player1.usedCard();
                 player2.usedCard();
                 card1 = player1.getArr()[(unsigned int) player1.stacksize() - 1];
@@ -128,15 +133,16 @@ namespace ariel {
 
     void Game::printLastTurn() const {
         if (this->turn == 0) {
-            throw ("There is no previous turn");
+            throw runtime_error("There is no previous turn");
         }
         cout << this->log[(unsigned int) this->turn - 1] << endl;
     }
 
     void Game::printLog() {
         int i = 0;
+        //no turns were played
         if(log[(unsigned int) i].empty()){
-            throw runtime_error("error");
+            throw runtime_error("no turns were played");
         }
         while ((!log[(unsigned int) i].empty()) && (i < 26)) {
             cout << log[(unsigned int) i] << endl;

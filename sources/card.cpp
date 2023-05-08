@@ -13,6 +13,7 @@ namespace ariel {
             throw invalid_argument("Invalid card type");
         }
         this->number = num;
+        //ace is the highest so I converted it to 14 for comfort.
         if (num == 1) {
             this->number = 14;
         }
