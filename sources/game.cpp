@@ -102,8 +102,8 @@ namespace ariel {
                 this->player2.addWin();
                 this->turn++;
                 return;
-                //else it's a draw
             }
+            //else it's a draw
             this->draws++;
             cout<<"there are "<<this->draws<<" draws"<<endl;
             //if the players have 1 or fewer cards left, just split it
