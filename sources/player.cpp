@@ -12,7 +12,7 @@ namespace ariel {
         this->name = "avi";
     }
 
-    Player::Player(string name) {
+    Player::Player(const string& name) {
         if (name.empty()) {
             throw invalid_argument("you did not enter a name");
         }
@@ -37,10 +37,6 @@ namespace ariel {
 
     void Player::updateWininngs(int num) {
         this->winnings += num;
-    }
-
-    int Player::getWinnings() const {
-        return this->winnings;
     }
 
     void Player::setArr(array<Card, 26> arr) {

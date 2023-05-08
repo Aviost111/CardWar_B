@@ -50,6 +50,9 @@ namespace ariel {
     }
 
     void Game::playAll() {
+        if(this->player1.stacksize()==0){
+            throw runtime_error("the game is over");
+        }
         while (this->player1.stacksize() != 0) {
             this->playTurn();
         }
@@ -84,7 +87,7 @@ namespace ariel {
 
             } else if (card1.getCard() < card2.getCard() || (card2.getCard() == 2 && card1.getCard() == 14)) {
                 endResult = result + " " + this->player2.getName() + " wins.";
-                player1.updateWininngs(numOfCards);
+                player2.updateWininngs(numOfCards);
                 this->log[(unsigned int) this->turn] = endResult;
                 this->player1.addLoss();
                 this->player2.addWin();
@@ -132,6 +135,9 @@ namespace ariel {
 
     void Game::printLog() {
         int i = 0;
+        if(log[(unsigned int) i].empty()){
+            throw runtime_error("error");
+        }
         while ((!log[(unsigned int) i].empty()) && (i < 26)) {
             cout << log[(unsigned int) i] << endl;
             i++;
@@ -139,15 +145,21 @@ namespace ariel {
     }
 
     void Game::printStats() {
+        if(this->turn>0){
         cout << player1.getName() << ":" << endl;
-        cout << " win rate-" << (player1.getWins() / (player1.getWins() + player1.getLosses())) << endl;
-        cout << " cards won-" << player1.getWinnings() << endl << endl;
+        cout << " win rate-" << int((double(player1.getWins()) / (this->turn))*100)<<"%"<< endl;
+        cout << " cards won-" << player1.cardesTaken() << endl << endl;
         cout << player2.getName() << ":" << endl;
-        cout << " win rate-" << (player2.getWins() / (player2.getWins() + player2.getLosses())) << endl;
-        cout << " cards won-" << player2.getWinnings() << endl << endl;
-        if (this->turn > 0) {
-            cout << "draw rate-" << this->draws / (this->turn) << endl;
+        cout << " win rate-" << int((double(player2.getWins()) / (this->turn))*100)<<"%"<< endl;
+        cout << " cards won-" << player2.cardesTaken() << endl << endl;
+        cout << "draw rate-" << int(double(this->draws) / (this->turn)*100)<<"%"<< endl;
         } else {
+            cout << player1.getName() << ":" << endl;
+            cout << " win rate-" << 0 << endl;
+            cout << " cards won-" << player1.cardesTaken() << endl << endl;
+            cout << player2.getName() << ":" << endl;
+            cout << " win rate-" << 0 << endl;
+            cout << " cards won-" << player2.cardesTaken() << endl << endl;
             cout << "draw rate-" << 0 << endl;
         }
         cout << "There were a total of " << this->draws << " draws" << endl;
@@ -156,10 +168,10 @@ namespace ariel {
     void Game::printWiner() {
         if (this->player1.stacksize() > 0) {
             cout << "the game isn't over" << endl;
-        } else if (this->player1.stacksize() > this->player2.stacksize()) {
-            cout << player1.getName() << endl;
-        } else if (this->player1.stacksize() < this->player2.stacksize()) {
-            cout << player2.getName() << endl;
+        } else if (this->player1.cardesTaken() > this->player2.cardesTaken()) {
+            cout << player1.getName()<<" is the winner"<< endl;
+        } else if (this->player1.cardesTaken() < this->player2.cardesTaken()) {
+            cout << player2.getName() <<" is the winner"<< endl;
         } else {
             cout << "no winner" << endl;
         }

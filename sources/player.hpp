@@ -20,7 +20,7 @@ namespace ariel {
     public:
         Player();
 
-        explicit Player(string name);
+        explicit Player(const string& name);
 
         int stacksize() const;
 
@@ -37,8 +37,6 @@ namespace ariel {
         }
 
         void setArr(array <Card, numOfCards> arr);
-
-        int getWinnings() const;
 
         int getWins() const;
 
