@@ -16,6 +16,9 @@ namespace ariel {
     //why const ?is it even ok?
     Game::Game(ariel::Player &player1, ariel::Player &player2) :
             player1(player1), player2(player2) {
+        //reset player if was touched
+        player1.resetPlayer();
+        player2.resetPlayer();
         //create an array of indexes
         int indexes[DECK_SIZE];
         //we want to shuffle a deck later, so we create the deck before shuffle and the deck for after

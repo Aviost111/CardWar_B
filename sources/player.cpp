@@ -56,4 +56,11 @@ namespace ariel {
     void Player::addWin() { this->wins++; }
 
     void Player::addLoss() { this->losses++; }
+
+    void Player::resetPlayer() {
+        this->CardIndex = -1;
+        this->winnings = 0;
+        this->wins = 0;
+        this->losses = 0;
+    }
 }

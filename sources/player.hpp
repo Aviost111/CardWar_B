@@ -10,6 +10,7 @@ const int numOfCards = 26;
 using namespace std;
 namespace ariel {
     class Player {
+    private:
         array <Card, numOfCards> cards;
         int CardIndex = -1;
         int winnings = 0;
@@ -43,6 +44,8 @@ namespace ariel {
         void addWin();
 
         void addLoss();
+
+        void resetPlayer();
     };
 }
 
